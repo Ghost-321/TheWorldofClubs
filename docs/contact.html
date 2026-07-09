@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | The World Of Clubs</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <aside class="side-nav">
+        <a class="logo" href="index.html"><img class="logo-mark" src="assets/images/logo.png" <span>The World Of Clubs</span></a>
+        <button class="menu-toggle" type="button" aria-expanded="false">Menu</button>
+        <nav aria-label="Main navigation">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="scores.html">Scores</a></li>
+            <li><a href="fifa.html">Leader-Board</a></li>
+            <li><a href="teams.html">News</a></li>
+            <li><a class="active" href="contact.html">About Us</a></li>
+          <img src="assets/images/logo.png"></img>
+        </nav>
+      </aside>
+      <main class="page-content">
+       <section class="page-header">
+  <p class="eyebrow">Send a message</p>
+  <h1>Contact Us</h1>
+  <p class="lead">Use this page to contact for help or support</p>
+</section>
+
+<section class="section two-column">
+  <!-- JavaScript will handle this form dynamically -->
+  <form id="contactForm" onsubmit="return false;">
+    
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" required>
+    
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="6" required></textarea>
+    
+    <button class="button" id="sendBtn" type="button">Send message</button>
+  </form>
+  
+  <article class="feature-box">
+    <h2>Contact details</h2>
+    <p><strong>Email:</strong> issam.jabakanji@education.nsw.gov.au</p>
+    <p><strong>Credits:</strong> Mosa, Issam and Huzifa</p>
+  </article>
+</section>
+
+<!-- Paste this script tag right below your HTML layout -->
+<script>
+document.getElementById('sendBtn').addEventListener('click', function() {
+  const nameVal = document.getElementById('name').value.trim();
+  const messageVal = document.getElementById('message').value.trim();
+  const btn = document.getElementById('sendBtn');
+
+  // 1. Basic validation check
+  if (!nameVal || !messageVal) {
+    alert('Please fill out both the Name and Message fields.');
+    return;
+  }
+
+  btn.innerText = 'Sending...';
+  btn.disabled = true;
+
+  // 2. Fixed URL to point directly to the submission handler
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      // Cleaned up line 43: Your real API key is perfectly placed here now!
+      access_key: '4dfc3d38-3669-4738-a9c5-b8b448aebb69',
+      name: nameVal,
+      message: messageVal
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert('Success! Your message was sent through the API to your inbox.');
+      document.getElementById('contactForm').reset(); // Clears the form fields
+    } else {
+      alert('Error: Please check if you pasted your API key correctly.');
+    }
+  })
+  .catch(error => {
+    alert('Network error. Make sure you are connected to the internet.');
+  })
+  .finally(() => {
+    btn.innerText = 'Send message';
+    btn.disabled = false;
+  });
+});
+</script>
+      </main>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>
